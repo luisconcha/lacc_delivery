@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: LaccDelivery
+        psr4_prefix: LaccDelivery
+        src_path: app
