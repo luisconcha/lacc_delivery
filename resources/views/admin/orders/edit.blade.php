@@ -17,7 +17,7 @@
                     <div class="col-md-4 text-right"><h3>Status <span
                                     class="label label-{{$order->status}}">{{$order->status}}</span></h3></div>
                     <div class="col-md-4 text-right"><h3>Deliveryman <span
-                                    class="label label-default">{{$order->deliveryman->name}}</span></h3></div>
+                                    class="label label-default">{{$order->deliveryman ? $order->deliveryman->name : 'There is no deliveryman for this order'}}</span></h3></div>
                 </div>
                 <hr>
                 <div class="invoice-title">

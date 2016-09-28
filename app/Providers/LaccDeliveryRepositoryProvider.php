@@ -47,6 +47,10 @@ class LaccDeliveryRepositoryProvider extends ServiceProvider
 					\LaccDelivery\Repositories\OrderRepository::class,
 					\LaccDelivery\Repositories\OrderRepositoryEloquent::class
 				);
+				$this->app->bind(
+					\LaccDelivery\Repositories\CupomRepository::class,
+					\LaccDelivery\Repositories\CupomRepositoryEloquent::class
+				);
 		}
 
 }

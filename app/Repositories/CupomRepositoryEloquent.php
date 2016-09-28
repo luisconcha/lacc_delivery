@@ -4,13 +4,15 @@ namespace LaccDelivery\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use LaccDelivery\Models\OrderItem;
+use LaccDelivery\Repositories\CupomRepository;
+use LaccDelivery\Models\Cupom;
+use LaccDelivery\Validators\CupomValidator;
 
 /**
- * Class OrderItemRepositoryEloquent
+ * Class CupomRepositoryEloquent
  * @package namespace LaccDelivery\Repositories;
  */
-class OrderItemRepositoryEloquent extends BaseRepository implements OrderItemRepository
+class CupomRepositoryEloquent extends BaseRepository implements CupomRepository
 {
     /**
      * Specify Model class name
@@ -19,7 +21,7 @@ class OrderItemRepositoryEloquent extends BaseRepository implements OrderItemRep
      */
     public function model()
     {
-        return OrderItem::class;
+        return Cupom::class;
     }
 
     

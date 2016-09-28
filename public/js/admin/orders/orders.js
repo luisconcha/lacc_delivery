@@ -6,4 +6,11 @@ $( document ).ready( function () {
         obj = $( this ).data( 'element' );
         $( obj ).toggle();
     } );
+
+    $( '.select-order' )
+        .addClass( 'col-lg-6  show-tick ' )
+        .selectpicker( {
+            style: 'btn-info'
+        } );
+
 } );

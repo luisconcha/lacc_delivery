@@ -2,7 +2,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrdersTable extends Migration
+class CreateCupomsTable extends Migration
 {
 		/**
 		 * Run the migrations.
@@ -11,14 +11,11 @@ class CreateOrdersTable extends Migration
 		 */
 		public function up()
 		{
-				Schema::create( 'orders', function ( Blueprint $table ) {
+				Schema::create( 'cupoms', function ( Blueprint $table ) {
 						$table->increments( 'id' );
-						$table->integer( 'client_id' )->unsigned();
-						$table->foreign( 'client_id' )->references( 'id' )->on( 'users' );
-						$table->integer( 'user_deliveryman_id' )->unsigned()->nullable();
-						$table->foreign( 'user_deliveryman_id' )->references( 'id' )->on( 'users' );
-						$table->decimal( 'total' );
-						$table->smallInteger( 'status' )->default( 0 );
+						$table->string( 'code' );
+						$table->decimal( 'value' );
+						$table->boolean( 'used' )->default( 0 );
 						$table->timestamps();
 				} );
 		}
@@ -35,6 +32,6 @@ class CreateOrdersTable extends Migration
 						$table->dropColumn( 'cupom_id' );
 				} );
 
-				Schema::drop( 'orders' );
+				Schema::drop( 'cupoms' );
 		}
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace LaccDelivery\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
@@ -14,23 +13,27 @@ use LaccDelivery\Validators\ProductValidator;
  */
 class ProductRepositoryEloquent extends BaseRepository implements ProductRepository
 {
-    /**
-     * Specify Model class name
-     *
-     * @return string
-     */
-    public function model()
-    {
-        return Product::class;
-    }
+		public function getList()
+		{
+				return $this->model->get( [ 'name', 'id','price' ] );
+		}
 
-    
+		/**
+		 * Specify Model class name
+		 *
+		 * @return string
+		 */
+		public function model()
+		{
+				return Product::class;
+		}
 
-    /**
-     * Boot up the repository, pushing criteria
-     */
-    public function boot()
-    {
-        $this->pushCriteria(app(RequestCriteria::class));
-    }
+		/**
+		 * Boot up the repository, pushing criteria
+		 */
+		public function boot()
+		{
+				$this->pushCriteria( app( RequestCriteria::class ) );
+		}
+
 }

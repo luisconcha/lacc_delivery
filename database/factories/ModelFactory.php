@@ -42,9 +42,9 @@ $factory->define( LaccDelivery\Models\Client::class, function ( Faker\Generator 
 $factory->define( LaccDelivery\Models\Order::class, function ( Faker\Generator $faker ) {
 		return [
 			'client_id'           => $faker->numberBetween( 2, 5 ),
-			'user_deliveryman_id' => rand(1,2),
+			'user_deliveryman_id' => rand( 1, 2 ),
 			'total'               => $faker->randomNumber( 2 ),
-			'status'              => rand(0,3),
+			'status'              => rand( 0, 3 ),
 		];
 } );
 $factory->define( LaccDelivery\Models\OrderItem::class, function ( Faker\Generator $faker ) {
@@ -53,5 +53,11 @@ $factory->define( LaccDelivery\Models\OrderItem::class, function ( Faker\Generat
 			'order_id'   => $faker->unique()->numberBetween( 1, 10 ),
 			'price'      => $faker->randomNumber( 3 ),
 			'qtd'        => $faker->randomNumber( 1 ),
+		];
+} );
+$factory->define( LaccDelivery\Models\Cupom::class, function ( Faker\Generator $faker ) {
+		return [
+			'code'  => rand( 100, 900 ),
+			'value' => rand( 50, 100 ),
 		];
 } );
