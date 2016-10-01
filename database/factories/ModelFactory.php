@@ -61,3 +61,6 @@ $factory->define( LaccDelivery\Models\Cupom::class, function ( Faker\Generator $
 			'value' => rand( 50, 100 ),
 		];
 } );
+$factory->define( LaccDelivery\Models\OAuthClients::class, function ( Faker\Generator $faker ) {
+		return [];
+} );
