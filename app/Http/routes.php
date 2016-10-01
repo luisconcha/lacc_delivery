@@ -57,11 +57,23 @@ Route::group( [ 'prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth.che
 		} );
 } );
 //Route of customer
-Route::group( [ 'prefix' => 'customer','middleware'=>'auth.checkrole:client', 'as' => 'customer.' ], function () {
+Route::group( [ 'prefix' => 'customer', 'middleware' => 'auth.checkrole:client', 'as' => 'customer.' ], function () {
 		Route::get( '/order', [ 'as' => 'order.index', 'uses' => 'CheckoutController@index' ] );
 		Route::get( '/order/create', [ 'as' => 'order.create', 'uses' => 'CheckoutController@create' ] );
 		Route::post( '/order/store', [ 'as' => 'order.store', 'uses' => 'CheckoutController@store' ] );
 //		Route::get( '/edit/{id}', [ 'as' => 'edit', 'uses' => 'CheckoutController@edit' ] );
 //		Route::put( '/update/{id}', [ 'as' => 'update', 'uses' => 'CheckoutControllers@update' ] );
 } );
-
+Route::post( 'oauth/access_token', function () {
+		return Response::json( Authorizer::issueAccessToken() );
+} );
+/**
+ * Agrupamento das rotas da API protegidas pelo OAuth2
+ */
+Route::group( [ 'prefix' => 'api', 'as' => 'api.', 'middleware' => 'oauth' ], function () {
+		Route::get( '/teste', function () {
+				return [
+					'description'     => 'Olá vc acessou uma rota protegida',
+				];
+		} );
+} );
