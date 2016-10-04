@@ -71,9 +71,25 @@ Route::post( 'oauth/access_token', function () {
  * Agrupamento das rotas da API protegidas pelo OAuth2
  */
 Route::group( [ 'prefix' => 'api', 'as' => 'api.', 'middleware' => 'oauth' ], function () {
-		Route::get( '/teste', function () {
-				return [
-					'description'     => 'Olá vc acessou uma rota protegida',
-				];
+		//Rota que retorna os dados da pessoa authenticada
+		Route::get( 'authenticated', [ 'as' => 'authenticated', 'uses' => 'Api\UserController@authenticated' ] );
+		//
+		Route::group( [ 'prefix' => 'client', 'as' => 'client.', 'middleware' => 'oauth.checkrole:client' ], function () {
+				//Rota restfull client
+				Route::resource( 'order',
+					'Api\Client\ClientCheckoutController',
+					[ 'except' => [ 'create', 'edit', 'destroy' ] ]
+				);
 		} );
+		//
+		Route::group( [ 'prefix' => 'deliveryman', 'as' => 'deliveryman.', 'middleware' => 'oauth.checkrole:deliveryman' ], function () {
+				//Rota restfull deliveryman
+				Route::resource( 'order',
+					'Api\Deliveryman\DeliverymanCheckoutController',
+					[ 'except' => [ 'create', 'edit', 'destroy' ] ]
+				);
+				//Atualzia dado de um recurso
+				Route::patch( 'order/{id}/update-status', [ 'as' => 'orders.update_status', 'uses' => 'Api\Deliveryman\DeliverymanCheckoutController@updateStatus' ] );
+		} );
+
 } );

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use LaccDelivery\Http\Requests\AdminClientRequest;
 use LaccDelivery\Repositories\ClientRepository;
 use LaccDelivery\Services\ClientService;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class ClientsController extends Controller
 {

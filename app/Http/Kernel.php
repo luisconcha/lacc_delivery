@@ -17,7 +17,7 @@ class Kernel extends HttpKernel
 			\Illuminate\Session\Middleware\StartSession::class,
 			\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 			\LaccDelivery\Http\Middleware\VerifyCsrfToken::class,
-			\LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class
+			\LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
 		];
 
 		/**
@@ -30,9 +30,10 @@ class Kernel extends HttpKernel
 			'auth.basic'                 => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
 			'guest'                      => \LaccDelivery\Http\Middleware\RedirectIfAuthenticated::class,
 			'auth.checkrole'             => \LaccDelivery\Http\Middleware\CheckRole::class,
+			'oauth.checkrole'            => \LaccDelivery\Http\Middleware\OAuthCheckRole::class,
 			'oauth'                      => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
 			'oauth-user'                 => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
 			'oauth-client'               => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
-			'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class
+			'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,
 		];
 }

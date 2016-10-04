@@ -110,7 +110,6 @@ class OrderService
 								$cupom->save();
 								unset( $data[ 'cupom_code' ] );
 						}
-
 						$items = $data[ 'items' ];
 						unset( $data[ 'items' ] );
 						$order = $this->orderRepository->create( $data );
@@ -125,7 +124,6 @@ class OrderService
 								$order->total = $total - $cupom->value;
 						}
 						$order->save();
-
 						\DB::commit();
 				}
 				catch ( \Exception $e ) {
@@ -133,6 +131,19 @@ class OrderService
 						throw $e;
 				}
 
+		}
+
+		public function updateStatus( $idOrder, $idDeliverMan, $status )
+		{
+				$order = $this->orderRepository->getByIdAndDeliveryman( $idOrder, $idDeliverMan );
+				if ( $order instanceof Order ) {
+						$order->status = $status;
+						$order->save();
+
+						return $order;
+				}
+
+				return false;
 		}
 
 }
