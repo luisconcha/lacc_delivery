@@ -11,7 +11,6 @@
  */
 namespace LaccDelivery\Http\Requests;
 
-
 class CheckoutRequest extends Request
 {
 		/**
@@ -31,8 +30,14 @@ class CheckoutRequest extends Request
 		 */
 		public function rules()
 		{
+				/**
+				 * exists:cupoms,code,used,0
+				 * se_existe:nome_tbl,nome_campo,outro_nome_campo,outro_nome_campo=0
+				 */
 				return [
-					'cupom_code'=>'exists:cupoms,code,used,0'
+					'cupom_code'         => 'exists:cupoms,code,used,0',
+					'items.0.product_id' => 'required',
+					'items.0.qtd'        => 'required',
 				];
 		}
 }
