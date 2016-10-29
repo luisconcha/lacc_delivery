@@ -35,9 +35,9 @@ class CheckoutRequest extends Request
 				 * se_existe:nome_tbl,nome_campo,outro_nome_campo,outro_nome_campo=0
 				 */
 				return [
-					'cupom_code'         => 'exists:cupoms,code,used,0',
-					'items.0.product_id' => 'required',
-					'items.0.qtd'        => 'required',
+					'cupom_code' => 'exists:cupoms,code,used,0',
+//					'items.0.product_id' => 'required',
+//					'items.0.qtd'        => 'required',
 				];
 		}
 }

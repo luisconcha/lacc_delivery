@@ -12,7 +12,6 @@
 namespace LaccDelivery\Http\Controllers\Api\Client;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use LaccDelivery\Http\Controllers\Controller;
 use LaccDelivery\Http\Requests\CheckoutRequest;
 use LaccDelivery\Repositories\OrderRepository;
@@ -40,9 +39,9 @@ class ClientCheckoutController extends Controller
 			UserRepository $userRepository,
 			OrderService $orderService )
 		{
-				$this->orderRepository   = $orderRepository;
-				$this->userRepository    = $userRepository;
-				$this->orderService      = $orderService;
+				$this->orderRepository = $orderRepository;
+				$this->userRepository  = $userRepository;
+				$this->orderService    = $orderService;
 		}
 
 		public function index()
@@ -56,31 +55,25 @@ class ClientCheckoutController extends Controller
 				return $listOrders;
 		}
 
-//		public function store( Request $request )
-//		{
-//				$data                = $request->all();
-//				$clientId            = $this->userRepository->find( Auth::user()->id )->client->id;
-//				$data[ 'client_id' ] = $clientId;
-//				$this->orderService->create( $data );
-//
-//				return redirect()->route( 'customer.order.index' );
-//		}
 		public function store( CheckoutRequest $request )
 		{
 				$data                = $request->all();
-				$clientId            = $this->userRepository->find( Auth::user()->id )->client->id;
+				$idUser              = Authorizer::getResourceOwnerId();
+				$clientId            = $this->userRepository->find( $idUser )->client->id;
 				$data[ 'client_id' ] = $clientId;
-				$this->orderService->create( $data );
+				$o                   = $this->orderService->create( $data );
+				$o                   = $this->orderRepository->with( [ 'items' ] )->find( $o->id );
 
-				return redirect()->route( 'customer.order.index' );
+				return $o;
+				//	return redirect()->route( 'customer.order.index' );
 		}
 
 		public function show( $id )
 		{
-				$order = $this->orderRepository->with(['client','items','cupom','deliveryman'])->find( $id ); 				//Serializa para retornar na listagem os dados do produto
-				$order->items->each(function($item){
+				$order = $this->orderRepository->with( [ 'client', 'items', 'cupom', 'deliveryman' ] )->find( $id ); //Serializa para retornar na listagem os dados do produto
+				$order->items->each( function ( $item ) {
 						$item->product;
-				});
+				} );
 
 				return $order;
 		}
