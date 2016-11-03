@@ -13,6 +13,7 @@ namespace LaccDelivery\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use LaccDelivery\Http\Requests\CheckoutRequest;
 use LaccDelivery\Repositories\OrderRepository;
 use LaccDelivery\Repositories\ProductRepository;
 use LaccDelivery\Repositories\UserRepository;
@@ -66,7 +67,7 @@ class CheckoutController extends Controller
 				return view( 'customer.order.create', compact( 'listProduct' ) );
 		}
 
-		public function store( Request $request )
+		public function store( CheckoutRequest $request )
 		{
 				$data                = $request->all();
 				$clientId            = $this->userRepository->find( Auth::user()->id )->client->id;
