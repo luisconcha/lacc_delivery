@@ -34,6 +34,8 @@ class ClientCheckoutController extends Controller
 		 */
 		private $orderService;
 
+		private $with = [ 'client', 'items', 'cupom', 'deliveryman' ];
+
 		public function __construct(
 			OrderRepository $orderRepository,
 			UserRepository $userRepository,
@@ -48,9 +50,12 @@ class ClientCheckoutController extends Controller
 		{
 				$idUser     = Authorizer::getResourceOwnerId();
 				$clientId   = $this->userRepository->find( $idUser )->client->id;
-				$listOrders = $this->orderRepository->with( [ 'items' ] )->scopeQuery( function ( $query ) use ( $clientId ) {
-						return $query->where( 'client_id', '=', $clientId );
-				} )->paginate();
+				$listOrders = $this->orderRepository
+					->skipPresenter( false )
+					->with( $this->with )
+					->scopeQuery( function ( $query ) use ( $clientId ) {
+							return $query->where( 'client_id', '=', $clientId );
+					} )->paginate();
 
 				return $listOrders;
 		}
@@ -62,20 +67,22 @@ class ClientCheckoutController extends Controller
 				$clientId            = $this->userRepository->find( $idUser )->client->id;
 				$data[ 'client_id' ] = $clientId;
 				$o                   = $this->orderService->create( $data );
-				$o                   = $this->orderRepository->with( [ 'items' ] )->find( $o->id );
 
-				return $o;
+				//$o                   = $this->orderRepository->with( [ 'items' ] )->find( $o->id );
 				//	return redirect()->route( 'customer.order.index' );
+
+				return $this->orderRepository->skipPresenter( false )->with( $this->with )->find( $o->id );
 		}
 
 		public function show( $id )
 		{
-				$order = $this->orderRepository->with( [ 'client', 'items', 'cupom', 'deliveryman' ] )->find( $id ); //Serializa para retornar na listagem os dados do produto
-				$order->items->each( function ( $item ) {
-						$item->product;
-				} );
-
-				return $order;
+//				$order = $this->orderRepository->with( [ 'client', 'items', 'cupom', 'deliveryman' ] )->find( $id );
+//				Serializa para retornar na listagem os dados do produto
+//				$order->items->each( function ( $item ) {
+//						$item->product;
+//				} );
+//				return $order;
+				return $this->orderRepository->skipPresenter( false )->with( $this->with )->find( $id );
 		}
 
 }
