@@ -13,7 +13,8 @@ class OrderTransformer extends TransformerAbstract
 		//Metodos para serializar os relacionamentos por padrão
 		//protected $defaultIncludes = [ 'cupom', 'items' ];
 		//Metodos para serializar os relacionamentos sobre demanda
-		protected $availableIncludes = [ 'cupom', 'items', 'client' ];
+		protected $availableIncludes = [ 'cupom', 'items', 'client','deliveryman' ];
+
 
 		/**
 		 * Transform the \Order entity
@@ -27,8 +28,8 @@ class OrderTransformer extends TransformerAbstract
 				return [
 					'id'         => (int)$model->id,
 					'total'      => (float)$model->total,
+					'status'     => $model->status,
 					'created_at' => $model->created_at,
-					'updated_at' => $model->updated_at,
 				];
 		}
 
@@ -51,5 +52,10 @@ class OrderTransformer extends TransformerAbstract
 		public function includeClient( Order $model )
 		{
 				return $this->item( $model->client, new ClientTransformer() );
+		}
+
+		public function includeDeliveryman( Order $model )
+		{
+				return $this->item( $model->deliveryman, new DeliverymanTransformer() );
 		}
 }

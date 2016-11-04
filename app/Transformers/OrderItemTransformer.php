@@ -10,6 +10,8 @@ use LaccDelivery\Models\OrderItem;
  */
 class OrderItemTransformer extends TransformerAbstract
 {
+		protected $availableIncludes = [ 'products' ];
+
 
 		/**
 		 * Transform the \OrderItem entity
@@ -21,13 +23,14 @@ class OrderItemTransformer extends TransformerAbstract
 		public function transform( OrderItem $model )
 		{
 				return [
-					'id'         => (int)$model->id,
-					'order_id'   => $model->order_id,
-					'product_id' => $model->product_id,
-					'price'      => $model->price,
-					'qtd'        => $model->qtd,
-					'created_at' => $model->created_at,
-					'updated_at' => $model->updated_at,
+					'id'    => (int)$model->id,
+					'price' => $model->price,
+					'qtd'   => $model->qtd,
 				];
+		}
+
+		public function includeProducts( Order $model )
+		{
+				return $this->item( $model->products, new ProductTransformer() );
 		}
 }
