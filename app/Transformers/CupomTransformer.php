@@ -25,8 +25,6 @@ class CupomTransformer extends TransformerAbstract
 					'code'       => $model->code,
 					'value'      => $model->value,
 					'used'       => $model->used,
-					'created_at' => $model->created_at,
-					'updated_at' => $model->updated_at,
 				];
 		}
 }

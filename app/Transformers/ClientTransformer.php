@@ -21,10 +21,12 @@ class ClientTransformer extends TransformerAbstract
 		public function transform( Client $model )
 		{
 				return [
-					'id'         => (int)$model->id,
-					'address'    => $model->address,
-					'created_at' => $model->created_at,
-					'updated_at' => $model->updated_at,
+					'id'      => (int)$model->id,
+					'phone'   => $model->address,
+					'address' => $model->address,
+					'zipcode' => $model->zipcode,
+					'city'    => $model->city,
+					'state'   => $model->state,
 				];
 		}
 }

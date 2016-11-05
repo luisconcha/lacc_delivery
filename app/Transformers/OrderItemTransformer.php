@@ -10,8 +10,7 @@ use LaccDelivery\Models\OrderItem;
  */
 class OrderItemTransformer extends TransformerAbstract
 {
-		protected $availableIncludes = [ 'products' ];
-
+		protected $defaultIncludes = [ 'products' ];
 
 		/**
 		 * Transform the \OrderItem entity
