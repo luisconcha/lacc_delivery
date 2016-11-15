@@ -1,7 +1,7 @@
 angular.module( 'starter.controllers' )
     .controller( 'ClientViewProductCtrl', [
-        '$scope', '$state', 'ProductFactory', '$ionicLoading', 'cart', '$localStorage',
-        function ( $scope, $state, ProductFactory, $ionicLoading, cart, $localStorage ) {
+        '$scope', '$state', 'ProductFactory', '$ionicLoading', '$cartService',
+        function ( $scope, $state, ProductFactory, $ionicLoading, $cartService ) {
             $scope.products = [];
 
             $ionicLoading.show( {
@@ -16,13 +16,9 @@ angular.module( 'starter.controllers' )
             } );
 
             $scope.addItem = function ( item ) {
-                cart.items.push( item );
+                item.qtd = 1;
+                $cartService.addItem( item );
                 $state.go( 'client.checkout' );
             };
-
-            console.log( $localStorage.setObject( 'LACC', {
-                name: 'Luis Alberto Concha',
-                numero: 20
-            } ) );
 
         } ] );
