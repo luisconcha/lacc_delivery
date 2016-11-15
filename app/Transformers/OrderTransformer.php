@@ -13,7 +13,7 @@ class OrderTransformer extends TransformerAbstract
 		//Metodos para serializar os relacionamentos por padrão
 		//protected $defaultIncludes = [ 'cupom', 'items' ];
 		//Metodos para serializar os relacionamentos sobre demanda
-		protected $availableIncludes = [ 'cupom', 'items', 'client','deliveryman' ];
+		protected $availableIncludes = [ 'cupom', 'items', 'client' ];
 
 
 		/**
@@ -52,10 +52,5 @@ class OrderTransformer extends TransformerAbstract
 		public function includeClient( Order $model )
 		{
 				return $this->item( $model->client, new ClientTransformer() );
-		}
-
-		public function includeDeliveryman( Order $model )
-		{
-				return $this->item( $model->deliveryman, new DeliverymanTransformer() );
 		}
 }
