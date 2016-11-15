@@ -1,9 +1,9 @@
 angular.module( 'starter.controllers' )
     .controller( 'ClientCheckoutCtrl', [
-        '$scope','cart',
-        function ( $scope, cart ) {
+        '$scope', 'cart', '$localStorage',
+        function ( $scope, cart, $localStorage ) {
 
-        $scope.items = cart.items;
+            $scope.items = cart.items;
 
-        console.log('$scope.items: ',$scope.items);
-    } ] );
+            console.log($localStorage.getObject());
+        } ] );
