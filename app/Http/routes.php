@@ -12,6 +12,45 @@
 Route::get( '/', function () {
 		return view( 'welcome' );
 } );
+/**
+ * Bloco Cors
+ */
+Route::group( [ 'middleware' => 'cors' ], function () {
+		Route::post( 'oauth/access_token', function () {
+				return Response::json( Authorizer::issueAccessToken() );
+		} );
+		/**
+		 * Agrupamento das rotas da API protegidas pelo OAuth2
+		 */
+		Route::group( [ 'prefix' => 'api', 'as' => 'api.', 'middleware' => 'oauth' ], function () {
+				//Rota que retorna os dados da pessoa authenticada
+				Route::get( 'authenticated', [ 'as' => 'authenticated', 'uses' => 'Api\UserController@authenticated' ] );
+				//
+				Route::group( [ 'prefix' => 'client', 'as' => 'client.', 'middleware' => 'oauth.checkrole:client' ], function () {
+						//Rota restfull client
+						Route::resource( 'order',
+							'Api\Client\ClientCheckoutController',
+							[ 'except' => [ 'create', 'edit', 'destroy' ] ]
+						);
+						Route::get( 'products', [ 'as' => 'products', 'uses' => 'Api\Client\ClientProductController@index' ] );
+				} );
+
+				//
+				Route::group( [ 'prefix' => 'deliveryman', 'as' => 'deliveryman.', 'middleware' => 'oauth.checkrole:deliveryman' ], function () {
+						//Rota restfull deliveryman
+						Route::resource( 'order',
+							'Api\Deliveryman\DeliverymanCheckoutController',
+							[ 'except' => [ 'create', 'edit', 'destroy' ] ]
+						);
+						//Atualzia dado de um recurso
+						Route::patch( 'order/{id}/update-status', [ 'as' => 'orders.update_status', 'uses' => 'Api\Deliveryman\DeliverymanCheckoutController@updateStatus' ] );
+				} );
+
+		} );
+} );
+/**
+ * Grupo ADMIN
+ */
 Route::group( [ 'prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth.checkrole:admin' ], function () {
 		// Route of categories
 		Route::group( [ 'prefix' => 'categories', 'as' => 'categories.' ], function () {
@@ -63,33 +102,4 @@ Route::group( [ 'prefix' => 'customer', 'middleware' => 'auth.checkrole:client',
 		Route::post( '/order/store', [ 'as' => 'order.store', 'uses' => 'CheckoutController@store' ] );
 //		Route::get( '/edit/{id}', [ 'as' => 'edit', 'uses' => 'CheckoutController@edit' ] );
 //		Route::put( '/update/{id}', [ 'as' => 'update', 'uses' => 'CheckoutControllers@update' ] );
-} );
-Route::post( 'oauth/access_token', function () {
-		return Response::json( Authorizer::issueAccessToken() );
-} );
-/**
- * Agrupamento das rotas da API protegidas pelo OAuth2
- */
-Route::group( [ 'prefix' => 'api', 'as' => 'api.', 'middleware' => 'oauth' ], function () {
-		//Rota que retorna os dados da pessoa authenticada
-		Route::get( 'authenticated', [ 'as' => 'authenticated', 'uses' => 'Api\UserController@authenticated' ] );
-		//
-		Route::group( [ 'prefix' => 'client', 'as' => 'client.', 'middleware' => 'oauth.checkrole:client' ], function () {
-				//Rota restfull client
-				Route::resource( 'order',
-					'Api\Client\ClientCheckoutController',
-					[ 'except' => [ 'create', 'edit', 'destroy' ] ]
-				);
-		} );
-		//
-		Route::group( [ 'prefix' => 'deliveryman', 'as' => 'deliveryman.', 'middleware' => 'oauth.checkrole:deliveryman' ], function () {
-				//Rota restfull deliveryman
-				Route::resource( 'order',
-					'Api\Deliveryman\DeliverymanCheckoutController',
-					[ 'except' => [ 'create', 'edit', 'destroy' ] ]
-				);
-				//Atualzia dado de um recurso
-				Route::patch( 'order/{id}/update-status', [ 'as' => 'orders.update_status', 'uses' => 'Api\Deliveryman\DeliverymanCheckoutController@updateStatus' ] );
-		} );
-
 } );

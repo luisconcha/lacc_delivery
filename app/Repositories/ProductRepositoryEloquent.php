@@ -5,7 +5,8 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use LaccDelivery\Repositories\ProductRepository;
 use LaccDelivery\Models\Product;
-use LaccDelivery\Validators\ProductValidator;
+//use LaccDelivery\Validators\ProductValidator;
+use LaccDelivery\Presenters\ProductPresenter;
 
 /**
  * Class ProductRepositoryEloquent
@@ -13,9 +14,11 @@ use LaccDelivery\Validators\ProductValidator;
  */
 class ProductRepositoryEloquent extends BaseRepository implements ProductRepository
 {
+		protected $skipPresenter = true;
+
 		public function getList()
 		{
-				return $this->model->get( [ 'name', 'id','price' ] );
+				return $this->model->get( [ 'name', 'id', 'price' ] );
 		}
 
 		/**
@@ -34,6 +37,11 @@ class ProductRepositoryEloquent extends BaseRepository implements ProductReposit
 		public function boot()
 		{
 				$this->pushCriteria( app( RequestCriteria::class ) );
+		}
+
+		public function presenter()
+		{
+				return ProductPresenter::class;
 		}
 
 }

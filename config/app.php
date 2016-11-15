@@ -123,6 +123,10 @@ return [
 			 */
 		LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
 		LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
+			/**
+			 * Cors
+			 */
+		Barryvdh\Cors\ServiceProvider::class,
 			/*
 			 * Application Service Providers...
 			 */

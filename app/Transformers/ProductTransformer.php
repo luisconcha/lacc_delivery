@@ -25,6 +25,8 @@ class ProductTransformer extends TransformerAbstract
 					'name'        => $model->name,
 					'description' => $model->description,
 					'price'       => $model->price,
+					'created_at'  => $model->created_at,
+					'update_at'   => $model->updated_at,
 				];
 		}
 }
