@@ -10,7 +10,7 @@ use LaccDelivery\Models\OrderItem;
  */
 class OrderItemTransformer extends TransformerAbstract
 {
-		protected $defaultIncludes = [ 'products' ];
+		protected $defaultIncludes = [ 'product' ];
 
 		/**
 		 * Transform the \OrderItem entity
@@ -28,8 +28,8 @@ class OrderItemTransformer extends TransformerAbstract
 				];
 		}
 
-		public function includeProducts( Order $model )
+		public function includeProduct( OrderItem $model )
 		{
-				return $this->item( $model->products, new ProductTransformer() );
+				return $this->item( $model->product, new ProductTransformer() );
 		}
 }
