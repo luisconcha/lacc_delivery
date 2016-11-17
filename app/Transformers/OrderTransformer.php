@@ -15,7 +15,6 @@ class OrderTransformer extends TransformerAbstract
 		//Metodos para serializar os relacionamentos sobre demanda
 		protected $availableIncludes = [ 'cupom', 'items', 'client' ];
 
-
 		/**
 		 * Transform the \Order entity
 		 *
@@ -29,7 +28,7 @@ class OrderTransformer extends TransformerAbstract
 					'id'         => (int)$model->id,
 					'total'      => (float)$model->total,
 					'status'     => $model->status,
-					'created_at' => $model->created_at,
+					'created_at' => dataHoraMinutoBR( $model->created_at ),
 				];
 		}
 

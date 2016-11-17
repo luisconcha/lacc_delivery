@@ -2,7 +2,6 @@
 namespace LaccDelivery\Http\Requests;
 
 class AdminClientRequest extends Request
-//class AdminClientRequest extends LaravelValidator
 {
 		/**
 		 * Determine if the user is authorized to make this request.
@@ -23,7 +22,7 @@ class AdminClientRequest extends Request
 		{
 				return [
 					'user.name'  => 'required',
-					'user.email' => 'required|email|unique:users,email,'.$this->id
+					'user.email' => 'required|email|unique:users,email'
 				];
 
 		}

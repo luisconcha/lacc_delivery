@@ -15,7 +15,9 @@ use Illuminate\Http\Request;
 use LaccDelivery\Http\Requests\AdminClientRequest;
 use LaccDelivery\Repositories\ClientRepository;
 use LaccDelivery\Services\ClientService;
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+use LaccDelivery\Validators\ClientValidator;
+use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class ClientsController extends Controller
 {
@@ -29,10 +31,16 @@ class ClientsController extends Controller
 		 */
 		private $clientService;
 
-		public function __construct( ClientRepository $repository, ClientService $clientService )
+		/**
+		 * @var ClientValidator
+		 */
+		private $clientValidator;
+
+		public function __construct( ClientRepository $repository, ClientService $clientService, ClientValidator $clientValidator )
 		{
-				$this->repository    = $repository;
-				$this->clientService = $clientService;
+				$this->repository      = $repository;
+				$this->clientService   = $clientService;
+				$this->clientValidator = $clientValidator;
 		}
 
 		public function index()
@@ -62,12 +70,24 @@ class ClientsController extends Controller
 				return view( 'admin.clients.edit', compact( 'client' ) );
 		}
 
-		public function update( AdminClientRequest $request, $id )
+		public function update( Request $request, $id )
 		{
-				$input = $request->all();
-				$this->clientService->update( $input, $id );
+				try {
+						$idUser = $this->repository->find( $id );
+						//Seta id do Cliente para ser validado o campo email ao momento de fazer update
+						$this->clientValidator->setId( $idUser->user_id );
+						$input = $request->all();
+						$this->clientValidator->with( $input )->passesOrFail( ValidatorInterface::RULE_UPDATE );
+						$this->clientService->update( $input, $id );
 
-				return redirect()->route( 'admin.clients.index' );
+						return redirect()->route( 'admin.clients.index' );
+				}
+				catch ( ValidatorException $e ) {
+						return [
+							'error'   => true,
+							'message' => $e->getMessageBag(),
+						];
+				}
 		}
 
 		public function destroy( $id )
