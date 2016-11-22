@@ -6,7 +6,7 @@
 
         @include('errors._check')
 
-        {!! Form::open(['route'=>'admin.clients.store']) !!}
+        {!! Form::model($client, ['route'=>'admin.clients.store']) !!}
 
         @include('admin.clients._form')
 
