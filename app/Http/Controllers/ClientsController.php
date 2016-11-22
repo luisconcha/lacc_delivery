@@ -52,15 +52,22 @@ class ClientsController extends Controller
 
 		public function create()
 		{
-				return view( 'admin.clients.create' );
+				$client = [];
+				return view( 'admin.clients.create', compact('client') );
 		}
 
-		public function store( AdminClientRequest $request )
+		public function store( Request $request )
 		{
-				$data = $request->all();
-				$this->clientService->create( $data );
+				try {
+						$client = $request->all();
+						$this->clientValidator->with( $client )->passesOrFail( ValidatorInterface::RULE_CREATE );
+						$this->clientService->create( $client );
 
-				return redirect()->route( 'admin.clients.index' );
+						return redirect()->route( 'admin.clients.index' );
+				}
+				catch ( ValidatorException $e ) {
+						return view( "admin.clients.create", compact( 'client' ) )->withErrors( $e->getMessageBag() );
+				}
 		}
 
 		public function edit( $id )
@@ -73,9 +80,9 @@ class ClientsController extends Controller
 		public function update( Request $request, $id )
 		{
 				try {
-						$idUser = $this->repository->find( $id );
+						$client = $this->repository->find( $id );
 						//Seta id do Cliente para ser validado o campo email ao momento de fazer update
-						$this->clientValidator->setId( $idUser->user_id );
+						$this->clientValidator->setId( $client->user_id );
 						$input = $request->all();
 						$this->clientValidator->with( $input )->passesOrFail( ValidatorInterface::RULE_UPDATE );
 						$this->clientService->update( $input, $id );
@@ -83,10 +90,7 @@ class ClientsController extends Controller
 						return redirect()->route( 'admin.clients.index' );
 				}
 				catch ( ValidatorException $e ) {
-						return [
-							'error'   => true,
-							'message' => $e->getMessageBag(),
-						];
+						return view( "admin.clients.edit", compact( 'client' ) )->withErrors( $e->getMessageBag() );
 				}
 		}
 
