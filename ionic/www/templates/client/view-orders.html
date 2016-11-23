@@ -1,0 +1,23 @@
+<ion-view>
+    <ion-nav-title>My Orders</ion-nav-title>
+    <ion-content class="padding has-subheader">
+        <ion-list>
+            <ion-item ng-repeat="o in orders">
+                <div class="row">
+                    <div class="col">
+                        Purchase date:  <span class="label-orders label-purchase-date">{{o.created_at}}</span>
+                    </div>
+                    <div class="col">
+                        Status: <span class="label-orders label-{{o.status}}">{{o.status}}</span><br>
+                    </div>
+                    <div class="col text-right">
+                        Total: {{o.qtd}}
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <!--<button class="button button-royal button-full" type="button" ng-click="openListOrder()">-->
+            <!--View my orders-->
+        <!--</button>-->
+    </ion-content>
+</ion-view>

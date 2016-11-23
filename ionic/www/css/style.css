@@ -1,1 +1,38 @@
-/* Empty. Add your own CSS if you like */
+/*Style for status of orders*/
+.label-orders {
+    display: inline;
+    padding: .2em .7em .2em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+
+.label-purchase-date{
+    background-color: #387ef5;
+}
+
+
+.label-Shipped {
+    background-color: #f0ad4e;
+}
+
+.label-Processing {
+    background-color: #5bc0de;
+}
+
+.label-Completed {
+    background-color: #5cb85c;
+}
+
+.label-Suspended {
+    background-color: #d9534f;
+}
+
+.label-Unknown {
+    background-color: #777;
+}

@@ -1,5 +1,6 @@
 angular.module( 'starter.controllers' )
-    .controller( 'HomeCtrl', [ '$scope',
-        function ( $scope, meuService ) {
+    .controller( 'HomeCtrl', [ '$scope', '$cookies',
+        function ( $scope, $cookies ) {
+            $scope.user_name = $cookies.getObject( 'user' ).name;
 
         } ] );

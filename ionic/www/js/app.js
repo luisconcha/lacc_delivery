@@ -1,8 +1,9 @@
 angular.module( 'starter.controllers', [] );
 angular.module( 'starter.services', [] );
+angular.module( 'starter.filters', [] );
 
 angular.module( 'starter', [
-    'ionic', 'starter.controllers', 'starter.services', 'angular-oauth2', 'ngResource'
+    'ionic', 'starter.controllers', 'starter.services','starter.filters', 'angular-oauth2', 'ngResource'
 ] )
     .constant( 'appConfig', {
         baseUrl: 'http://lacc_delivery.dev' //API laravel
@@ -70,12 +71,18 @@ angular.module( 'starter', [
                 templateUrl: 'templates/client/checkout-item-detail.html',
                 controller: 'ClientCheckoutDetailCtrl'
             } )
-            .state('client.checkout_successful',{
+            .state( 'client.checkout_successful', {
                 cache: false,
                 url: '/checkout/successful',
                 templateUrl: 'templates/client/checkout-successful.html',
-                controller:'ClientCheckoutSuccessfulCtrl'
-            })
+                controller: 'ClientCheckoutSuccessfulCtrl'
+            } )
+            .state( 'client.view_orders', {
+                cache:false,
+                url: '/view_orders/:id',
+                templateUrl: 'templates/client/view-orders.html',
+                controller: 'ClientViewOrderCtrl'
+            } )
             .state( 'client.view_products', {
                 url: '/view_products',
                 templateUrl: 'templates/client/view-products.html',
