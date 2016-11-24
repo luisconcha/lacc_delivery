@@ -9,7 +9,7 @@ angular.module( 'starter.controllers' )
                     template: 'Loading orders...'
                 } );
 
-                ClientOrderFactory.get( { id: $stateParams.id, include: "cupom,items" }, function ( data ) {
+                ClientOrderFactory.get( {}, function ( data ) {
                     var orders = data.data;
                     angular.forEach( orders, function ( order ) {
 

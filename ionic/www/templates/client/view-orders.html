@@ -2,7 +2,7 @@
     <ion-nav-title>My Orders</ion-nav-title>
     <ion-content class="padding has-subheader">
         <ion-list>
-            <ion-item ng-repeat="o in orders">
+            <ion-item ng-repeat="o in orders track by $index">
                 <div class="row">
                     <div class="col">
                         Purchase date:  <span class="label-orders label-purchase-date">{{o.created_at}}</span>
@@ -11,7 +11,7 @@
                         Status: <span class="label-orders label-{{o.status}}">{{o.status}}</span><br>
                     </div>
                     <div class="col text-right">
-                        Total: {{o.qtd}}
+                        Total: <span class="label-orders label-total">{{o.total}}</span>
                     </div>
                 </div>
             </ion-item>
