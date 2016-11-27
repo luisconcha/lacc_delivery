@@ -34,7 +34,6 @@ Route::group( [ 'middleware' => 'cors' ], function () {
 						);
 						Route::get( 'products', [ 'as' => 'products', 'uses' => 'Api\Client\ClientProductController@index' ] );
 				} );
-
 				//
 				Route::group( [ 'prefix' => 'deliveryman', 'as' => 'deliveryman.', 'middleware' => 'oauth.checkrole:deliveryman' ], function () {
 						//Rota restfull deliveryman
@@ -45,6 +44,8 @@ Route::group( [ 'middleware' => 'cors' ], function () {
 						//Atualzia dado de um recurso
 						Route::patch( 'order/{id}/update-status', [ 'as' => 'orders.update_status', 'uses' => 'Api\Deliveryman\DeliverymanCheckoutController@updateStatus' ] );
 				} );
+				//
+				Route::get( 'cupom/{cupomCode}', 'Api\CupomController@show' );
 
 		} );
 } );

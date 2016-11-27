@@ -59,6 +59,31 @@ angular.module( 'starter.services' )
             $localStorage.setObject( key, cart );
         };
 
+        this.setCupom = function ( cupomCode, value ) {
+            var cart   = this.get();
+            cart.cupom = {
+                code: cupomCode,
+                value: value
+            };
+
+            $localStorage.setObject( key, cart );
+        };
+
+        this.removeCupom = function () {
+            var cart   = this.get();
+            cart.cupom = {
+                code: null,
+                value: null
+            };
+
+            $localStorage.setObject( key, cart );
+        };
+
+        this.getTotalFinal = function () {
+            var cart = this.get();
+            return cart.total - (cart.cupom.value || 0);
+        };
+
         function calculateSubTotal( item ) {
             return item.price * item.qtd;
         }
@@ -75,7 +100,11 @@ angular.module( 'starter.services' )
         function initCart() {
             $localStorage.setObject( key, {
                 items: [],
-                total: 0
+                total: 0,
+                cupom: {
+                    code: null,
+                    value: null
+                }
             } );
         }
     } ] );

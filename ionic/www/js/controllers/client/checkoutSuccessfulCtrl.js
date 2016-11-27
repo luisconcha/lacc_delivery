@@ -4,7 +4,8 @@ angular.module( 'starter.controllers' )
             function ( $scope, $state, $cartService ) {
                 var cart     = $cartService.get();
                 $scope.items = cart.items;
-                $scope.total = cart.total;
+                $scope.total = $cartService.getTotalFinal();
+                $scope.cupom = cart.cupom;
 
                 $cartService.clear();
 

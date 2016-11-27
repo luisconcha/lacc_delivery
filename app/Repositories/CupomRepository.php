@@ -1,5 +1,4 @@
 <?php
-
 namespace LaccDelivery\Repositories;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
@@ -10,5 +9,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface CupomRepository extends RepositoryInterface
 {
-    //
+		public function findByCode( $cupomCode );
 }

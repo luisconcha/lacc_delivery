@@ -6,7 +6,8 @@ angular.module( 'starter', [
     'ionic', 'starter.controllers', 'starter.services','starter.filters', 'angular-oauth2', 'ngResource'
 ] )
     .constant( 'appConfig', {
-        baseUrl: 'http://lacc_delivery.dev' //API laravel
+        // baseUrl: 'http://lacc_delivery.dev' //API laravel
+        baseUrl: 'http://192.168.0.0:8000' //API laravel
     } )
 
     .run( function ( $ionicPlatform ) {
@@ -89,7 +90,7 @@ angular.module( 'starter', [
                 controller: 'ClientViewProductCtrl'
             } );
 
-        // $urlRouterProvider.otherwise( '/' );
+        $urlRouterProvider.otherwise( '/login' );
     } )
     .service( 'cart', function () {
         this.items = [];

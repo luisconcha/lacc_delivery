@@ -13,7 +13,7 @@ angular.module( 'starter.controllers' )
                         UserFactory.getUserAuthenticated( {}, {}, function ( data ) {
                             console.log( 'Obj: ', data );
                             $cookies.putObject( 'user', data );
-                            $state.go( 'home' );
+                            $state.go( 'client.checkout' );
                         } );
                     }, function ( responseError ) {
                         $ionicPopup.alert( {
